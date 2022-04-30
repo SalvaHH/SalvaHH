@@ -387,7 +387,7 @@ player_each_team = 5
 n_friends = 10
 n_possible_teams = math.factorial(n_friends)/(math.factorial(n_friends-player_each_team)*math.factorial(player_each_team))
 ```
-Now imagine that we want to organise more balanced teams dividing our friends in good players and bad players:
+Now imagine that this football match was boring and we want to organise more balanced teams dividing our friends in good players and bad players:
 
 ```python
 good_players = ["Holly","Benjy","Leo","Cristiano"]
@@ -413,13 +413,6 @@ We get a list of 120 possible balanced teams.
 
 If we are not interested in the team composition but we want only to know the number of possible combinations, we can use Factorial calculations to get the possible teams:
 
-```python
-import math
-player_each_team = 5
-n_friends = 10
-n_possible_teams = math.factorial(n_friends)/(math.factorial(n_friends-player_each_team)*math.factorial(player_each_team))          
-```
-We get 252 possible teams in the 1st example without division inside the group of friends.
 ```python
 good_players_each_team = 2
 good_players = 4

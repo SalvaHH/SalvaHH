@@ -395,10 +395,6 @@ bad_players = ["Mark","Julian","Dieter","John","Luis","Robert"]
 ```
 We want to be sure that each team contain at least 2 good player and 3 bad players.
 
-```python
-good_players = ["Holly","Benjy","Leo","Cristiano"]
-bad_players = ["Mark","Julian","Dieter","John","Luis","Robert"]
-```
 We iterate inside the two lists of friends and we get all possible balanced teams with two good players and three bad players:
 ```python
 good_players_perms = list(it.combinations(good_players,2))

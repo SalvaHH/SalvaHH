@@ -381,3 +381,57 @@ Team Two: ['John', 'Benji', 'Cristiano', 'Robert', 'Luis']
 
 We can get the number of possible combinations also with math:
 
+```python
+import math
+player_each_team = 5
+n_friends = 10
+n_possible_teams = math.factorial(n_friends)/(math.factorial(n_friends-player_each_team)*math.factorial(player_each_team))
+```
+Now imagine that we want to organise more balanced teams dividing our friends in good players and bad players:
+
+```python
+good_players = ["Holly","Benjy","Leo","Cristiano"]
+bad_players = ["Mark","Julian","Dieter","John","Luis","Robert"]
+```
+We want to be sure that each team contain at least 2 good player and 3 bad players.
+
+```python
+good_players = ["Holly","Benjy","Leo","Cristiano"]
+bad_players = ["Mark","Julian","Dieter","John","Luis","Robert"]
+```
+We iterate inside the two lists of friends and we get all possible balanced teams with two good players and three bad players:
+```python
+good_players_perms = list(it.combinations(good_players,2))
+bad_players_perms = list(it.combinations(bad_players,3))
+balanced_teams = []
+for good_players in good_players_perms:
+    for bad_players in bad_players_perms:
+                  balanced_teams.append(good_players + bad_players)     
+print(balanced_teams)             
+```
+We get a list of 120 possible balanced teams.
+
+If we are not interested in the team composition but we want only to know the number of possible combinations, we can use Factorial calculations to get the possible teams:
+
+```python
+import math
+player_each_team = 5
+n_friends = 10
+n_possible_teams = math.factorial(n_friends)/(math.factorial(n_friends-player_each_team)*math.factorial(player_each_team))          
+```
+We get 252 possible teams in the 1st example without division inside the group of friends.
+```python
+good_players_each_team = 2
+good_players = 4
+
+n_possible_good_players = math.factorial(good_players)/(math.factorial(good_players-good_players_each_team)*math.factorial(good_players_each_team))
+
+bad_players_each_team = 3
+bad_players = 6
+
+n_possible_bad_players = 
+math.factorial(bad_players)/(math.factorial(bad_players-bad_players_each_team)*math.factorial(bad_players_each_team))
+
+n_possible_bad_players*n_possible_good_players         
+```
+We get the total of 120 different possible balanced teams.

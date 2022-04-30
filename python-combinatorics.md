@@ -82,7 +82,7 @@ and then the **len(letters)** function to get 26.
  
 
 ```python
-numbers = [1,2,3,4,5,6,7,8,9,0]
+numbers = string.digits 
 ```
 
 The possibile numbers are easier to calculate and are **len(numbers)=10**.
@@ -235,9 +235,9 @@ es = string.count("e")
 
 n_pepper_perms = math.factorial(len(string))/(math.factorial(ps)*math.factorial(es))
 ```
-## All continental winners
+## Continental leagues
 
-For this task we are not interested in the winners of the race, but we want to have the permutations of the winners as they were running in continental leagues.
+For this task we are not interested in the winners of the race, but we want to have the permutations of the runners as they were running in continental leagues instead of olympics.
 
 We create a dictionary with runners and continents:
 
@@ -251,18 +251,133 @@ runners = {"Enoch Adegoke":"Africa",
            "Su Bingtian":"Asia",
            "Andre De Grasse":"America"}
 ```
-First we get the number of runners from each continent:
+First we want to divide all runners by continent:
 
 ```python
-from collections import Counter
-continents = dict(Counter(list(runners.values())))
+from collections import defaultdict
+runners_by_continent = defaultdict(list)
+for key, val in sorted(runners.items()):
+    runners_by_continent[val].append(key)
 ```
-Result: {'Africa': 2, 'Europe': 2, 'America': 3, 'Asia': 1}
+Result:    
 
-If we calculate only the continent of the runner, we can calculate with math the number of assignments:
+ defaultdict(list,  
+            {'Africa': ['Akani Simbine', 'Enoch Adegoke'],  
+             'America': ['Andre De Grasse', 'Fred Kerley', 'Ronnie Baker'],  
+             'Europe': ['Marcell Jacobs', 'Zharnel Hughes'],  
+             'Asia': ['Su Bingtian']})  
+
+Then we can find all assignments of different continental leagues:
 
 ```python
-math.factorial(len(runners))/(
-math.factorial(continents["Europe"])*math.factorial(continents["Asia"])*math.factorial(continents["America"])*math.factorial(continents["Africa"]))
+perm_by_continent = []
+for key in runners_by_continent:
+    perm_by_continent.append(list(it.permutations(runners_by_continent[key])    
 ```
-Result 1680
+Result:   
+
+[[('Akani Simbine', 'Enoch Adegoke'), ('Enoch Adegoke', 'Akani Simbine')],   
+ [('Andre De Grasse', 'Fred Kerley', 'Ronnie Baker'),   
+  ('Andre De Grasse', 'Ronnie Baker', 'Fred Kerley'),   
+  ('Fred Kerley', 'Andre De Grasse', 'Ronnie Baker'),   
+  ('Fred Kerley', 'Ronnie Baker', 'Andre De Grasse'),   
+  ('Ronnie Baker', 'Andre De Grasse', 'Fred Kerley'),   
+  ('Ronnie Baker', 'Fred Kerley', 'Andre De Grasse')],   
+ [('Marcell Jacobs', 'Zharnel Hughes'),   
+  ('Zharnel Hughes', 'Marcell Jacobs')],   
+ [('Su Bingtian',)]]
+
+ Then we should make all possible assignments iterating all lists inside the list perm_by_continent :
+ 
+ ```python
+continent_perms = []
+for african_runners in perm_by_continent[0]:
+    for american_runners in perm_by_continent[1]:
+        for european_runners in perm_by_continent[2]:
+            for asian_runners in perm_by_continent[3]:
+                continent_perms.append(african_runners + american_runners + european_runners + asian_runners)
+```
+Result:
+we get all possible 24 different permutations from all continental leagues.
+
+[('Akani Simbine',
+  'Enoch Adegoke',
+  'Andre De Grasse',
+  'Fred Kerley',
+  'Ronnie Baker',
+  'Marcell Jacobs',
+  'Zharnel Hughes',
+  'Su Bingtian'),
+
+ ('Akani Simbine',
+  'Enoch Adegoke',
+  'Andre De Grasse',
+  'Fred Kerley',
+  'Ronnie Baker',
+  'Zharnel Hughes',
+  'Marcell Jacobs',
+  'Su Bingtian'),
+
+ ('Akani Simbine',
+  'Enoch Adegoke',
+  'Andre De Grasse',
+  'Ronnie Baker',
+  'Fred Kerley',
+  'Marcell Jacobs',
+  'Zharnel Hughes',
+  'Su Bingtian'),
+
+ ('Akani Simbine',
+  'Enoch Adegoke',
+  'Andre De Grasse',
+  'Ronnie Baker',
+  'Fred Kerley',
+  'Zharnel Hughes',
+  'Marcell Jacobs',
+  'Su Bingtian'),
+
+ [...]
+
+ We can calculate the number of possible permutations, just with simple math:
+2! * 2! * 3! * 1! = 24
+
+# Combinations
+
+In combinations we are interested in determining the number of different groups of r objects that could be formed form a total of n objects.
+
+We want to organize a 5 vs 5 football match and we want to know all possible teams.
+
+```python
+friends = ["John", "Mark", "Holly", "Benji", "Cristiano", "Leo", "Julian", "Robert", "Luis", "Dieter"]
+```
+if we want to know all possible combinations we can use the **combination()** function from module itertools:
+
+```python
+possible_teams = list(it.combinations(friends,5))
+```
+we get a list of 252 possible team combinations. 
+
+If we want a randomizer we can pick-up a random team with **random.randint()** from numpy library.
+
+```python
+import numpy as np
+random = np.random.randint(len(possible_teams))
+team_one = possible_teams[random]
+```
+We can call this function everytime and try to get always different teams.
+
+If we want to define also the opponent team we could delete from friend list all team_one players:
+
+```python
+for player in team_one:
+    friends.remove(player)
+team_two = friends
+```
+In our example we get teams:
+
+Team One: ('Mark', 'Holly', 'Leo', 'Julian', 'Dieter')
+
+Team Two: ['John', 'Benji', 'Cristiano', 'Robert', 'Luis']
+
+We can get the number of possible combinations also with math:
+

@@ -423,4 +423,14 @@ math.factorial(bad_players)/(math.factorial(bad_players-bad_players_each_team)*m
 
 n_possible_bad_players*n_possible_good_players         
 ```
-We get the total of 120 different possible balanced teams.
+Now we have a problem as Cristiano and Leo don't want to play togheter anymore. We have to remove from balanced teams all the teams in which Cristiano and Leo play togheter:
+
+```python
+teams_without_enemies = []
+for team in balanced_teams:
+    if "Cristiano" and "Leo" not in team:
+        teams_without_enemies.append(team)
+```
+We get only 60 possible teams in which we are sure that "Cristiano" and "Leo" are opponents.
+
+

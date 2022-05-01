@@ -421,6 +421,8 @@ bad_players = 6
 n_possible_bad_players = 
 math.factorial(bad_players)/(math.factorial(bad_players-bad_players_each_team)*math.factorial(bad_players_each_team))
 
+n_possible_bad_players = math.comb(bad_players,bad_players_each_team)
+
 n_possible_bad_players*n_possible_good_players         
 ```
 Now we have a problem as Cristiano and Leo don't want to play togheter anymore. We have to remove from balanced teams all the teams in which Cristiano and Leo play togheter:

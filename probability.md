@@ -235,6 +235,52 @@ Result: 240/1001
 
 ### Married couples
 
-In a group of 10 couples we want to know the probability to make a group of 5 people all unrelated.
+In a group of 5 couples we want to know the probability to make a group of 3 people all unrelated.
 
-We have to imagine this experiment like a 
+We have to imagine this experiment like a different stages decisions:
+
+```python
+married_couples = [["Mary","John"],["Homer","Marge"],["Beauty","Beast"],["Abigail","George"],["Marco","Luisa"]]
+
+all_persons = []
+for couples in married_couples:
+    for person in couples:
+        all_persons.append(person)
+
+sample_space = list(it.combinations(all_persons,3))
+```
+We get a list of 120 possibile results
+
+[('Mary', 'John', 'Homer'),   
+ ('Mary', 'John', 'Marge'),   
+ ('Mary', 'John', 'Beauty'),   
+ ('Mary', 'John', 'Beast'),   
+ ('Mary', 'John', 'Abigail'),   
+ ('Mary', 'John', 'George'),   
+ ('Mary', 'John', 'Marco'),  
+ ('Mary', 'John', 'Luisa'),   
+...]
+
+Now we want to exclude all possible combination that contains two persons from the same couple.
+
+```python
+correct_results = sample_space.copy()
+for couple in married_couples:
+    for res in sample_space:
+        if couple[0] in res and couple[1] in res:
+                if res in correct_results:
+                    correct_results.remove(res)
+```
+Then we get all possible 80 results. 
+
+Result: The probability is **80/120** 
+
+In Stack Overflow I got a much quicker answer:
+```python
+import itertools as it
+
+married_couples = [["Cip","Ciop"],["Ronald","Monica"],["Mary","John"],["Homer","Marge"],["Beauty","Beast"],["Abigail","George"],["Marco","Luisa"],["Anthony","Grace"],["Tom","Jerry"],["Donald Duck","Pluto"]]
+
+result = [list(it.product(*t)) for t in it.combinations(married_couples, 3)]
+
+```

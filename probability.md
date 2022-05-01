@@ -247,6 +247,10 @@ for couples in married_couples:
     for person in couples:
         all_persons.append(person)
 
+# You can use in alternative a generator:
+all_persons = [list(it.product(*t)) for t in it.combinations(married_couples, 3)]
+
+
 sample_space = list(it.combinations(all_persons,3))
 ```
 We get a list of 120 possibile results
@@ -279,7 +283,7 @@ In Stack Overflow I got a much quicker answer:
 ```python
 import itertools as it
 
-married_couples = [["Cip","Ciop"],["Ronald","Monica"],["Mary","John"],["Homer","Marge"],["Beauty","Beast"],["Abigail","George"],["Marco","Luisa"],["Anthony","Grace"],["Tom","Jerry"],["Donald Duck","Pluto"]]
+married_couples = [["Mary","John"],["Homer","Marge"],["Beauty","Beast"],["Abigail","George"],["Marco","Luisa"]]
 
 result = [list(it.product(*t)) for t in it.combinations(married_couples, 3)]
 

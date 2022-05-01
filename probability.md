@@ -278,13 +278,3 @@ for couple in married_couples:
 Then we get all possible 80 results. 
 
 Result: The probability is **80/120** 
-
-In Stack Overflow I got a much quicker answer:
-```python
-import itertools as it
-
-married_couples = [["Mary","John"],["Homer","Marge"],["Beauty","Beast"],["Abigail","George"],["Marco","Luisa"]]
-
-result = [list(it.product(*t)) for t in it.combinations(married_couples, 3)]
-
-```
